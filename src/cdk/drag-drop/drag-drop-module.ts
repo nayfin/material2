@@ -10,6 +10,7 @@ import {NgModule} from '@angular/core';
 import {CdkDropList} from './directives/drop-list';
 import {CdkDropListGroup} from './directives/drop-list-group';
 import {CdkDrag} from './directives/drag';
+import {CdkResize} from './directives/resize';
 import {CdkDragHandle} from './directives/drag-handle';
 import {CdkDragPreview} from './directives/drag-preview';
 import {CdkDragPlaceholder} from './directives/drag-placeholder';
@@ -20,6 +21,7 @@ import {DragDrop} from './drag-drop';
     CdkDropList,
     CdkDropListGroup,
     CdkDrag,
+    CdkResize,
     CdkDragHandle,
     CdkDragPreview,
     CdkDragPlaceholder,
@@ -28,6 +30,7 @@ import {DragDrop} from './drag-drop';
     CdkDropList,
     CdkDropListGroup,
     CdkDrag,
+    CdkResize,
     CdkDragHandle,
     CdkDragPreview,
     CdkDragPlaceholder,

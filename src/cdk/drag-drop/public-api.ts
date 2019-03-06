@@ -9,6 +9,7 @@
 export {DragDrop} from './drag-drop';
 export {DragRef, DragRefConfig} from './drag-ref';
 export {DropListRef} from './drop-list-ref';
+export {ResizeRef} from './resize-ref';
 
 export * from './drop-list-container';
 export * from './drag-events';
