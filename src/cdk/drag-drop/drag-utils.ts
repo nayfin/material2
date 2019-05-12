@@ -13,8 +13,8 @@
  * @param toIndex Index to which the item should be moved.
  */
 export function moveItemInArray<T = any>(array: T[], fromIndex: number, toIndex: number): void {
-  const from = clamp(fromIndex, array.length - 1);
-  const to = clamp(toIndex, array.length - 1);
+  const from = clamp(fromIndex, 0, array.length - 1);
+  const to = clamp(toIndex, 0, array.length - 1);
 
   if (from === to) {
     return;
@@ -42,8 +42,8 @@ export function transferArrayItem<T = any>(currentArray: T[],
                                            targetArray: T[],
                                            currentIndex: number,
                                            targetIndex: number): void {
-  const from = clamp(currentIndex, currentArray.length - 1);
-  const to = clamp(targetIndex, targetArray.length);
+  const from = clamp(currentIndex, 0, currentArray.length - 1);
+  const to = clamp(targetIndex, 0, targetArray.length);
 
   if (currentArray.length) {
     targetArray.splice(to, 0, currentArray.splice(from, 1)[0]);
@@ -63,14 +63,14 @@ export function copyArrayItem<T = any>(currentArray: T[],
                                        targetArray: T[],
                                        currentIndex: number,
                                        targetIndex: number): void {
-  const to = clamp(targetIndex, targetArray.length);
+  const to = clamp(targetIndex, 0, targetArray.length);
 
   if (currentArray.length) {
     targetArray.splice(to, 0, currentArray[currentIndex]);
   }
 }
 
-/** Clamps a number between zero and a maximum. */
-function clamp(value: number, max: number): number {
-  return Math.max(0, Math.min(max, value));
+/** Clamps a number between a minimum and a maximum. */
+export function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
 }

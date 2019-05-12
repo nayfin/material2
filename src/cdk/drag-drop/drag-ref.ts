@@ -16,6 +16,7 @@ import {DropListRefInternal as DropListRef} from './drop-list-ref';
 import {DragDropRegistry} from './drag-drop-registry';
 import {extendStyles, toggleNativeDragInteractions} from './drag-styling';
 import {getTransformTransitionDurationInMs} from './transition-duration';
+import {clamp} from './drag-utils';
 
 /** Object that can be used to configure the behavior of DragRef. */
 export interface DragRefConfig {
@@ -69,15 +70,19 @@ interface DragHelperTemplate<T = any> {
  * @docs-private
  */
 export class DragRef<T = any> {
+  // TODO: directive
   /** Element displayed next to the user's pointer while the element is dragged. */
   private _preview: HTMLElement;
 
+  // TODO: directive
   /** Reference to the view of the preview element. */
   private _previewRef: EmbeddedViewRef<any> | null;
 
+  // TODO: directive
   /** Reference to the view of the placeholder element. */
   private _placeholderRef: EmbeddedViewRef<any> | null;
 
+  // TODO: directive
   /** Element that is rendered instead of the draggable item while it is being sorted. */
   private _placeholder: HTMLElement;
 
@@ -197,12 +202,15 @@ export class DragRef<T = any> {
   /** Droppable container that the draggable is a part of. */
   private _dropContainer?: DropListRef;
 
+  // TODO: directive
   /** Layout direction of the item. */
   private _direction: Direction = 'ltr';
 
+  // TODO: directive
   /** Axis along which dragging is locked. */
   lockAxis: 'x' | 'y';
 
+  // TODO: directive??
   /**
    * Amount of milliseconds to wait after the user has put their
    * pointer down before starting to drag the element.
@@ -1054,11 +1062,6 @@ function deepCloneNode(node: HTMLElement): HTMLElement {
   }
 
   return clone;
-}
-
-/** Clamps a value between a minimum and a maximum. */
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value));
 }
 
 /**
