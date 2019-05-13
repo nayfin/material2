@@ -16,7 +16,7 @@ import {DropListRefInternal as DropListRef} from './drop-list-ref';
 import {DragDropRegistry} from './drag-drop-registry';
 import {extendStyles, toggleNativeDragInteractions} from './drag-styling';
 import {getTransformTransitionDurationInMs} from './transition-duration';
-import {clamp} from './drag-utils';
+import {clamp, getTransform, deepCloneNode, removeElement, isTouchEvent, getPreviewInsertionPoint} from './drag-utils';
 
 /** Object that can be used to configure the behavior of DragRef. */
 export interface DragRefConfig {
@@ -1038,55 +1038,4 @@ export interface Point {
   y: number;
 }
 
-/**
- * Gets a 3d `transform` that can be applied to an element.
- * @param x Desired position of the element along the X axis.
- * @param y Desired position of the element along the Y axis.
- */
-function getTransform(x: number, y: number): string {
-  // Round the transforms since some browsers will
-  // blur the elements for sub-pixel transforms.
-  return `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
-}
 
-/** Creates a deep clone of an element. */
-function deepCloneNode(node: HTMLElement): HTMLElement {
-  const clone = node.cloneNode(true) as HTMLElement;
-  const descendantsWithId = clone.querySelectorAll('[id]');
-
-  // Remove the `id` to avoid having multiple elements with the same id on the page.
-  clone.removeAttribute('id');
-
-  for (let i = 0; i < descendantsWithId.length; i++) {
-    descendantsWithId[i].removeAttribute('id');
-  }
-
-  return clone;
-}
-
-/**
- * Helper to remove an element from the DOM and to do all the necessary null checks.
- * @param element Element to be removed.
- */
-function removeElement(element: HTMLElement | null) {
-  if (element && element.parentNode) {
-    element.parentNode.removeChild(element);
-  }
-}
-
-/** Determines whether an event is a touch event. */
-function isTouchEvent(event: MouseEvent | TouchEvent): event is TouchEvent {
-  return event.type.startsWith('touch');
-}
-
-/** Gets the element into which the drag preview should be inserted. */
-function getPreviewInsertionPoint(documentRef: any): HTMLElement {
-  // We can't use the body if the user is in fullscreen mode,
-  // because the preview will render under the fullscreen element.
-  // TODO(crisbeto): dedupe this with the `FullscreenOverlayContainer` eventually.
-  return documentRef.fullscreenElement ||
-         documentRef.webkitFullscreenElement ||
-         documentRef.mozFullScreenElement ||
-         documentRef.msFullscreenElement ||
-         documentRef.body;
-}
